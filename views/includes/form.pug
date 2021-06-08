@@ -1,0 +1,21 @@
+.collapse#invoice-form
+  form
+    .h2 Send a tip using lightning network
+    .form-group
+      label(for="description") Descripción
+      input(id="description").form-control
+    .form-group
+      label(for="amount") Enter the amount (SAT):
+      .input-group.input-group-lg.mb-3
+        .input-group-prepend
+          span.input-group-text ₿
+        input.form-control.amount(
+          placeholder="Enter your amount in satoshis",
+          required,
+          id="amount",
+          value="1000",
+          spellcheck="false",
+          autocomplete="off",
+          type="number"
+        )
+    button.btn.btn-primary#send-btn(type="button") Enviar
