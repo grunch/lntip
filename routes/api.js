@@ -18,9 +18,11 @@ router.post('/invoice', async (req, res) => {
     });
   }
   try {
+    const prefix = process.env.INVOICE_PREFIX || '';
+    const description = prefix + req.body.description;
     const invoice = await createInvoice({
       lnd,
-      description: req.body.description,
+      description,
       tokens: req.body.amount
     });
     return res.status(200).json({
