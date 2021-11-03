@@ -6,6 +6,7 @@ const App = {
 App.init = () => {
   $('#invoice-form').collapse('show');
   $('#send-btn').click(App.sendBtn);
+  $('#send-onchain-btn').click(App.sendOnchainBtn);
   App.getBalance();
 }
 
@@ -26,6 +27,24 @@ App.sendBtn = async () => {
     const qrCode = App.qrCode(response.request.toUpperCase(), 400);
     $('.qr-code').html(qrCode);
     App.interval = setInterval(App.waitPayment, 2000, response.hash);
+  }
+};
+
+App.sendOnchainBtn = async () => {
+  const amount = $('#amount').val();
+  const description = $('#description').val();
+  const response = await App.makeRequest({
+    api: "address",
+  });
+  if (!response) console.error('Error getting data!');
+  if (response.success) {
+    $('#invoice-form').collapse('hide');
+    $('#show-address').collapse('show');
+    $('#address-description').text(description);
+    $('#address-text').text(response.address);
+    $('#address-amount').text(amount);
+    const qrCode = App.qrCode(response.address.toUpperCase(), 400);
+    $('.qr-code').html(qrCode);
   }
 };
 

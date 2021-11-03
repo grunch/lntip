@@ -1,8 +1,8 @@
 .collapse#invoice-form
   form
-    .h2 Send a tip using lightning network
+    .h2 Send a tip using Bitcoin
     .form-group
-      label(for="description") Descripción
+      label(for="description") Description
       input(id="description").form-control
     .form-group
       label(for="amount") Enter the amount (SAT):
@@ -18,4 +18,5 @@
           autocomplete="off",
           type="number"
         )
-    button.btn.btn-primary#send-btn(type="button") Enviar
+    button.btn.btn-primary#send-btn(type="button") Send using Lightning Network
+    button.btn.ml-4.btn-success#send-onchain-btn(type="button") I prefer to send to a Bitcoin address

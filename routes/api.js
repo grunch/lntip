@@ -4,6 +4,7 @@ const {
   createInvoice,
   getInvoice,
   getChannelBalance,
+  createChainAddress,
 } = require('ln-service'); // TODO: en lugar de utilizar las funciones de ln-service
 // directamente lo mejor es crear wrappers
 const lnd = require('../ln/connect');
@@ -28,6 +29,26 @@ router.post('/invoice', async (req, res) => {
     return res.status(200).json({
       hash: invoice.id,
       request: invoice.request,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({ success: false });
+  }
+});
+
+// get a new address
+router.get('/address', async (req, res) => {
+  try {
+    const prefix = process.env.INVOICE_PREFIX || '';
+    const format = 'p2wpkh';
+    const {address} = await createChainAddress({
+      lnd,
+      format,
+    });
+
+    return res.status(200).json({
+      address,
       success: true,
     });
   } catch (error) {
